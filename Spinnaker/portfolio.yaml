@@ -1,0 +1,64 @@
+# Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+Portfolios:
+    Components:
+      - Name: spinnaker-managing-account
+        Owner: Amazon-Web-Services
+        Description: EKS Product
+        Distributor: Amazon-Web-Services
+        SupportDescription: Contact us on Chime for help #central-it-team
+        SupportEmail: central-it-team@customer.com
+        SupportUrl: https://wiki.customer.com/central-it-team/self-service/
+        Tags:
+        - Key: product-type
+          Value: containers
+        Versions:
+          - Name: v1
+            Description: Spinnaker Managing Account Product
+            Active: True
+            Source:
+              Provider: CodeCommit
+              Configuration:
+                RepositoryName: spinnaker-managing-account
+                BranchName: v1
+
+      - Name: spinnaker-managed-account
+        Owner: Amazon-Web-Services
+        Description: EKS Product
+        Distributor: Amazon-Web-Services
+        SupportDescription: Contact us on Chime for help #central-it-team
+        SupportEmail: central-it-team@customer.com
+        SupportUrl: https://wiki.customer.com/central-it-team/self-service/
+        Tags:
+        - Key: product-type
+          Value: containers
+        Versions:
+          - Name: v1
+            Description: Spinnaker Managed Resources Account Product
+            Active: True
+            Source:
+              Provider: CodeCommit
+              Configuration:
+                RepositoryName: spinnaker-managed-account
+                BranchName: v1
+
+      - Name: eks-worker-nodes
+        Owner: Amazon-Web-Services
+        Description: EKS Product
+        Distributor: Amazon-Web-Services
+        SupportDescription: Contact us on Chime for help #central-it-team
+        SupportEmail: central-it-team@customer.com
+        SupportUrl: https://wiki.customer.com/central-it-team/self-service/
+        Tags:
+        - Key: product-type
+          Value: containers
+        Versions:
+          - Name: v1
+            Description: EKS Worker Nodes
+            Active: True
+            Source:
+              Provider: CodeCommit
+              Configuration:
+                RepositoryName: eks-worker-nodes
+                BranchName: v1

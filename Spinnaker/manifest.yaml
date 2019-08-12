@@ -1,0 +1,77 @@
+# Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+schema: puppet-2019-04-01
+
+launches:
+  spinnaker-managing-account:
+    portfolio: demo-central-it-team-portfolio
+    product: spinnaker-managing-account
+    version: v1
+    parameters:
+      UseAccessKeyForAuthentication:
+        Default: false
+      EksClusterName:
+        spinnaker-cluster
+      SpinnakerVPCCIDR:
+        Default: 10.100.0.0/16
+      SpinnakerPublicSubnet1CIDR:
+        Default: 10.100.10.0/24
+      SpinnakerPublicSubnet2CIDR:
+        Default: 10.100.11.0/24
+    outputs:
+      ssm:
+        - param_name: spinnaker-auth-role
+          stack_output: AuthArn
+        - param_name: spinnaker-managing-account-id
+          stack_output: ManagingAccountId
+        - param_name: eks-cluster-name
+          stack_output: EksClusterName
+        - param_name: control-plane-sg
+          stack_output: SecurityGroups
+        - param_name: cluster-subnets
+          stack_output: SubnetIds
+        - param_name: cluster-vpc
+          stack_output: VpcId
+        - param_name: nodes-instance-profile
+          stack_output: SpinnakerInstanceProfileArn
+
+  spinnaker-managed-account:
+    portfolio: demo-central-it-team-portfolio
+    product: spinnaker-managed-account
+    version: v1
+    depends_on:
+      - spinnaker-managing-account
+    parameters:
+      AuthArn:
+        ssm:
+          name: spinnaker-auth-role
+      ManagingAccountId:
+        ssm:
+          name: spinnaker-managing-account-id
+
+
+  eks-worker-nodes:
+    portfolio: demo-central-it-team-portfolio
+    product: eks-worker-nodes
+    version: v1
+    parameters:
+      NodeInstanceProfile:
+        ssm:
+          name: nodes-instance-profile
+      NodeInstanceType:
+        Default: t2.large
+      ClusterName:
+        ssm:
+          name: EksClusterName
+      NodeGroupName:
+        Default: spinnaker-cluster-nodes
+      ClusterControlPlaneSecurityGroup:
+        ssm:
+          name: control-plane-sg
+      Subnets:
+        ssm:
+          name: cluster-subnets
+      VpcId:
+        ssm:
+          name: cluster-vpc
