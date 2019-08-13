@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "ECS Task Definition to deploy Halyard CLI on EC2 to deploy & control spinnaker"
+Resources:
+    halyardTaskDefinition:
+        Type: "AWS::ECS::TaskDefinition"
+        Properties:
+            ContainerDefinitions:
+              -
+                Essential: true
+                Image: "gcr.io/spinnaker-marketplace/halyard:stable"
+                MemoryReservation: "512"
+                MountPoints:
+                  -
+                    SourceVolume: "halyard"
+                    ContainerPath: "/home/spinnaker/.hal"
+                    ReadOnly: ""
+                Name: "halyard"
+                PortMappings:
+                  -
+                    ContainerPort: "8084"
+                    HostPort: "8084"
+                    Protocol: "tcp"
+                  -
+                    ContainerPort: "9000"
+                    HostPort: "9000"
+                    Protocol: "tcp"
+            Family: "halyard-task-definition"
+            TaskRoleArn: "arn:aws:iam::104903466595:role/ecsTaskExecutionRole"
+            Volumes:
+              -
+                Name: "halyard"
+                Host:
+                    SourcePath: "/home/ec2-user/.hal"
+            RequiresCompatibilities:
+              - "EC2"
+            PlacementConstraints: []
